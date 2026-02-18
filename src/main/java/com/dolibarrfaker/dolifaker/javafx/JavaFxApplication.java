@@ -4,6 +4,7 @@ import com.dolibarrfaker.dolifaker.javafx.pages.HomePage;
 import com.dolibarrfaker.dolifaker.javafx.pages.LoginPage;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class JavaFxApplication {
@@ -17,8 +18,22 @@ public class JavaFxApplication {
             // Créer la page de connexion
             LoginPage loginPage = new LoginPage();
             loginPage.setOnConnexionSuccess(() -> {
-                // Quand on clique sur connexion, aller à la page d'accueil
-                showHomePage();
+                String url = loginPage.getUrlDolibarr();
+                String apiKey = loginPage.getApiKey();
+            
+                // Test de connexion
+                boolean ok = DolibarrClient.testConnection(url, apiKey);
+                if (ok) {
+                    showHomePage();
+                } else {
+                    javafx.application.Platform.runLater(() -> {
+                        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
+                                javafx.scene.control.Alert.AlertType.ERROR,
+                                "Connexion échouée : vérifiez l'URL et la clé API."
+                        );
+                        alert.showAndWait();
+                    });
+                }
             });
             loginScene = new Scene(loginPage, 400, 400);
             
