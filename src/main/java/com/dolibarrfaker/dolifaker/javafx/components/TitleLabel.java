@@ -12,8 +12,6 @@ public class TitleLabel extends Label {
 
         // Charger CSS
         this.getStylesheets().addAll(
-                getClass().getResource("/javafx/styles/theme.css").toExternalForm(),
-                getClass().getResource("/javafx/styles/base.css").toExternalForm(),
                 getClass().getResource("/javafx/styles/components/form.css").toExternalForm());
         this.getStyleClass().add("page-title");
 

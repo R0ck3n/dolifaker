@@ -25,6 +25,11 @@ public class LoginPage extends StackPane {
         VBox container = new VBox(20, title, loginForm); // 20px d'espacement
         this.getChildren().add(container);
         this.setPadding(new javafx.geometry.Insets(20));
+
+        this.getStylesheets().addAll(
+            getClass().getResource("/javafx/styles/theme.css").toExternalForm(),
+            getClass().getResource("/javafx/styles/base.css").toExternalForm()
+        );
     }
 
     // 🔹 Callback pour le bouton connexion

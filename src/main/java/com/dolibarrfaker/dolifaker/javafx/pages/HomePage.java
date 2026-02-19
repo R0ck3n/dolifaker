@@ -1,11 +1,12 @@
 package com.dolibarrfaker.dolifaker.javafx.pages;
 
-import com.dolibarrfaker.dolifaker.javafx.components.ProjectGeneratorCard;
+import com.dolibarrfaker.dolifaker.javafx.components.HomeForm;
+import com.dolibarrfaker.dolifaker.javafx.components.TitleLabel;
 import com.dolibarrfaker.dolifaker.javafx.components.TopBar;
 import com.dolibarrfaker.dolifaker.model.dto.User;
 import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class HomePage extends BorderPane {
 
@@ -17,19 +18,30 @@ public class HomePage extends BorderPane {
     }
 
     private void createUI() {
-
         String name = (user != null) ? user.getFullName() : "Utilisateur";
 
+        // 🔹 TopBar avec nom utilisateur
         this.setTop(new TopBar(name));
 
-        ProjectGeneratorCard card = new ProjectGeneratorCard(value -> {
+        // 🔹 Titre de la page
+        TitleLabel title = new TitleLabel("Génération des objets");
+
+        // 🔹 Formulaire central
+        HomeForm homeForm = new HomeForm(value -> {
             System.out.println("On génère " + value + " projets !");
-            // 👉 Appel DolibarrClient ici plus tard
+            // 👉 Appel DolibarrClient ici
         });
 
-        StackPane centerWrapper = new StackPane(card);
-        centerWrapper.setPadding(new Insets(40));
+        // 🔹 Container vertical : titre + formulaire
+        VBox centerContainer = new VBox(20, title, homeForm); // 20px spacing
+        centerContainer.setPadding(new Insets(40));
 
-        this.setCenter(centerWrapper);
+        this.setCenter(centerContainer);
+
+        // 🔹 Optionnel : appliquer style global
+        this.getStylesheets().addAll(
+            getClass().getResource("/javafx/styles/theme.css").toExternalForm(),
+            getClass().getResource("/javafx/styles/base.css").toExternalForm()
+        );
     }
 }
