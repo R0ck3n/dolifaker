@@ -6,18 +6,24 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 /**
  * FormNumberLine : une ligne Label + Spinner
  * - Label complet sur la largeur souhaitée
  * - Spinner pour choisir un nombre
+ * - Ne gère pas de callback, juste les valeurs
  */
 public class FormNumberLine extends HBox {
 
     private final Label label;
     private final Spinner<Integer> spinner;
 
+    /**
+     * @param labelText   Texte du label
+     * @param min         Valeur minimale du spinner
+     * @param max         Valeur maximale du spinner
+     * @param initialValue Valeur initiale du spinner
+     */
     public FormNumberLine(String labelText, int min, int max, int initialValue) {
         super(10); // spacing horizontal
         this.setAlignment(Pos.CENTER_LEFT);

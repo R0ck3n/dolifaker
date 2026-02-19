@@ -1,47 +1,65 @@
 package com.dolibarrfaker.dolifaker.javafx.components;
 
+import com.dolibarrfaker.dolifaker.model.dto.HomeFormValues;
+
 import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 
 /**
- * HomeForm : formulaire complet pour générer des objets
- * - Contient un ou plusieurs FormNumberLine
- * - Bouton Générer
+ * HomeForm : formulaire pour générer des objets (projets, utilisateurs…)
+ * - Contient des FormNumberLine pour chaque type d’objet
+ * - Ne centre pas son contenu : layout respecté par le parent
  */
 public class HomeForm extends VBox {
 
-    private final PrimaryButton generateButton;
     private final FormNumberLine projectsLine;
-
+    private final FormNumberLine tiersLine;
+    private final PrimaryButton generateButton;
     private ProjectGenerationCallback callback;
 
     public HomeForm(ProjectGenerationCallback callback) {
-        super(10);
+        super(10); // espacement vertical
         this.setPadding(new Insets(10));
         this.callback = callback;
 
-        // 🔹 Ligne projets
-        projectsLine = new FormNumberLine("Nombre de projets à générer", 0, 1000, 0);
+        // 🔹 Ligne pour générer des projets
+        projectsLine = new FormNumberLine(
+                "Nombre de projets à générer",
+                0, 1000, 0);
+        this.getChildren().add(projectsLine);
 
-        // 🔹 Bouton générer
+        // 🔹 Ligne pour générer des Tiers
+        tiersLine = new FormNumberLine(
+                "Nombre de Tiers à générer",
+                0, 1000, 0);
+        this.getChildren().add(tiersLine);
+
+        // 🔹 Bouton "Générer"
         generateButton = new PrimaryButton("Générer");
         generateButton.setOnAction(e -> {
             if (callback != null) {
-                callback.onGenerate(projectsLine.getValue());
+                callback.onGenerate(new HomeFormValues(
+                    projectsLine.getValue(),
+                    tiersLine.getValue()
+                ));
             }
         });
-        VBox.setMargin(generateButton, new Insets(10,0,0,0)); // marge au-dessus du bouton
+        this.getChildren().add(generateButton); // ⚡ Ajouter le bouton au VBox
 
-        // 🔹 Ajouter tous les enfants
-        this.getChildren().addAll(projectsLine, generateButton);
-
-        // 🔹 Style
-        this.getStylesheets().add(getClass().getResource("/javafx/styles/components/form.css").toExternalForm());
+        // Charger CSS spécifique formulaire
+        this.getStylesheets().add(
+                getClass().getResource("/javafx/styles/components/form.css").toExternalForm());
         this.getStyleClass().add("home-form");
     }
 
+    // 🔹 Setter callback si besoin
     public void setCallback(ProjectGenerationCallback callback) {
         this.callback = callback;
+    }
+
+    // 🔹 Getter pour récupérer la valeur actuelle
+    public int getProjectCount() {
+        return projectsLine.getValue();
     }
 
     public FormNumberLine getProjectsLine() {
@@ -54,6 +72,7 @@ public class HomeForm extends VBox {
 
     // 🔹 Interface callback
     public interface ProjectGenerationCallback {
-        void onGenerate(int count);
+        void onGenerate(HomeFormValues values);
     }
+    
 }

@@ -27,10 +27,11 @@ public class HomePage extends BorderPane {
         TitleLabel title = new TitleLabel("Génération des objets");
 
         // 🔹 Formulaire central
-        HomeForm homeForm = new HomeForm(value -> {
-            System.out.println("On génère " + value + " projets !");
+        HomeForm homeForm = new HomeForm(values -> {
+            System.out.println("Générer " + values.projets + " projets et " + values.tiers + " tiers !");
             // 👉 Appel DolibarrClient ici
         });
+        
 
         // 🔹 Container vertical : titre + formulaire
         VBox centerContainer = new VBox(20, title, homeForm); // 20px spacing
