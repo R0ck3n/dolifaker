@@ -1,0 +1,6 @@
+/* ================= TOPBAR ================= */
+.top-bar .user-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #555;
+    -fx-font-weight: bold;
+}

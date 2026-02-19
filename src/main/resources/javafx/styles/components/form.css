@@ -1,0 +1,28 @@
+/* Style général du composant */
+.text-form-field {
+    spacing: 5px;
+    -fx-padding: 5px;
+}
+
+/* Style du label */
+.text-form-field-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Style du champ texte */
+.text-form-field-input {
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Focus effect */
+.text-form-field-input:focused {
+    -fx-border-color: #0078d7;
+    -fx-box-shadow: 0 0 5px rgba(0,120,215,0.5);
+}

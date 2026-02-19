@@ -1,74 +1,43 @@
 package com.dolibarrfaker.dolifaker.javafx.pages;
 
-import javafx.geometry.Insets;
+import com.dolibarrfaker.dolifaker.javafx.components.LoginForm;
+import com.dolibarrfaker.dolifaker.javafx.components.TitleLabel;
+
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class LoginPage extends StackPane {
-    
-    private TextField urlField;
-    private TextField apiKeyField;
-    private Button connexionButton;
-    private Runnable onConnexionSuccess;
-    
+
+    private final LoginForm loginForm;
+
     public LoginPage() {
-        createUI();
+        loginForm = new LoginForm();
+
+        // 🔹 Titre
+        TitleLabel title = new TitleLabel("Connexion à Dolibarr");
+        // Centre uniquement le titre horizontalement
+        VBox.setMargin(title, new javafx.geometry.Insets(50, 0, 10, 0)); // optionnel : espace en dessous
+        title.setMaxWidth(Double.MAX_VALUE); // occupe toute la largeur
+        title.setAlignment(Pos.CENTER); // centre le texte
+
+        // 🔹 Container vertical pour titre + formulaire
+        VBox container = new VBox(20, title, loginForm); // 20px d'espacement
+        this.getChildren().add(container);
+        this.setPadding(new javafx.geometry.Insets(20));
     }
-    
-    private void createUI() {
-        VBox vbox = new VBox(15);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setPadding(new Insets(40));
-        
-        Label titleLabel = new Label("Connexion");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-        
-        Label idLabel = new Label("Entrez l'url Dolibarr :");
-        urlField = new TextField();
-        urlField.setPromptText("Url Dolibarr");
-        urlField.setPrefWidth(250);
-        
-        Label passwordLabel = new Label("Entrer la clé API:");
-        apiKeyField = new TextField();
-        apiKeyField.setPromptText("clé API");
-        apiKeyField.setPrefWidth(250);
-        
-        connexionButton = new Button("Connexion");
-        connexionButton.setPrefWidth(250);
-        connexionButton.setStyle("-fx-font-size: 14px;");
-        
-        connexionButton.setOnAction(e -> {
-            if (onConnexionSuccess != null) {
-                onConnexionSuccess.run();
-            }
-        });
-        
-        vbox.getChildren().addAll(
-            titleLabel,
-            idLabel,
-            urlField,
-            passwordLabel,
-            apiKeyField,
-            connexionButton
-        );
-        
-        this.getChildren().add(vbox);
-    }
-    
+
+    // 🔹 Callback pour le bouton connexion
     public void setOnConnexionSuccess(Runnable callback) {
-        this.onConnexionSuccess = callback;
+        loginForm.setOnConnexionSuccess(callback);
     }
-    
+
+    // 🔹 Accès aux champs
     public String getUrlDolibarr() {
-        return urlField.getText();
+        return loginForm.getUrl();
     }
-    
+
     public String getApiKey() {
-        return apiKeyField.getText();
+        return loginForm.getApiKey();
     }
-    
 }

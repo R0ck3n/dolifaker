@@ -1,0 +1,28 @@
+/* ================= GLOBAL ================= */
+.root {
+    -fx-background-color: #f4f6f9;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+}
+
+.label {
+    -fx-text-fill: #333;
+}
+
+.input {
+    -fx-text-fill: #111;
+}
+
+/* Couleurs */
+:root {
+    -primary-color: #4f46e5;
+    -secondary-color: #e5e7eb;
+    -success-color: #16a34a;
+    -error-color: #dc2626;
+}
+
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}

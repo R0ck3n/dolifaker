@@ -21,7 +21,7 @@ public class JavaFxApplication {
         Platform.runLater(() -> {
             // Créer la page de connexion
             LoginPage loginPage = new LoginPage();
-            DolibarrSession session = new DolibarrSession(); // crée une session temporaire
+            DolibarrSession session = new DolibarrSession(); // session temporaire
             loginPage.setOnConnexionSuccess(() -> {
                 String url = loginPage.getUrlDolibarr();
                 String apiKey = loginPage.getApiKey();
@@ -33,33 +33,34 @@ public class JavaFxApplication {
                 // Test de connexion
                 boolean ok = DolibarrClient.testConnection(session);
                 if (ok) {
-
                     UserService userService = new UserService(session);
                     User user = userService.getCurrentUser();
                     HomePage homePage = new HomePage(user);
-                    homeScene = new Scene(homePage, 400, 300);
+                    homeScene = new Scene(homePage, 800, 600); // plus grand pour HomePage
                     showHomePage();
                 } else {
-                    Platform.runLater(() -> {
-                        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
-                                javafx.scene.control.Alert.AlertType.ERROR,
-                                "Connexion échouée : vérifiez l'URL et la clé API."
-                        );
-                        alert.showAndWait();
-                    });
+                    javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
+                            javafx.scene.control.Alert.AlertType.ERROR,
+                            "Connexion échouée : vérifiez l'URL et la clé API.");
+                    alert.showAndWait();
                 }
             });
 
-            loginScene = new Scene(loginPage, 400, 400);
-
-
-
-            // Créer et afficher la fenêtre
+            // ⚡ Créer le Stage AVANT d’ajouter la scène
             primaryStage = new Stage();
             primaryStage.setTitle("Dolifaker");
+
+            // Quand l'utilisateur ferme la fenêtre
+            primaryStage.setOnCloseRequest(event -> {
+                System.exit(0);
+            });
+
+            // Créer et afficher la scène login
+            loginScene = new Scene(loginPage, 600, 500);
             primaryStage.setScene(loginScene);
             primaryStage.show();
         });
+
     }
 
     private static void showHomePage() {

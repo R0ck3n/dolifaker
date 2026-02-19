@@ -1,0 +1,19 @@
+/* ================= CARD ================= */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 5);
+    -fx-padding: 30;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+}
+
+.card .title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.generator-form .form-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
